@@ -1,0 +1,28 @@
+import { Repository } from 'typeorm';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
+import { Order } from './entities/order.entity';
+import { MailService } from '../mail/mail.service';
+import { InventoryService } from '../inventory/inventory.service';
+import { Product } from '../products/entities/product.entity';
+import { UsersService } from '../users/users.service';
+import { Coupon } from '../coupons/entities/coupon.entity';
+export declare class OrdersService {
+    private readonly orderRepository;
+    private readonly inventoryService;
+    private readonly productRepository;
+    private readonly couponRepository;
+    private readonly mailService;
+    private readonly usersService;
+    constructor(orderRepository: Repository<Order>, inventoryService: InventoryService, productRepository: Repository<Product>, couponRepository: Repository<Coupon>, mailService: MailService, usersService: UsersService);
+    create(createOrderDto: CreateOrderDto): Promise<Order>;
+    createPreOrder(createOrderDto: CreateOrderDto): Promise<Order>;
+    convertPreOrder(id: number): Promise<Order>;
+    findAll(): Promise<Order[]>;
+    findAllByUser(userId: number): Promise<Order[]>;
+    trackOrder(identifier: string): Promise<Order>;
+    findOne(id: number): Promise<Order>;
+    update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order>;
+    updateStatus(id: number, status: string): Promise<Order>;
+    remove(id: number): Promise<void>;
+}
